@@ -1,14 +1,9 @@
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
+import coinsReducer from '../slices/cryptoSlice';
 
-const store = configureStore({
-  reducer: {},
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: myCustomApiService,
-      },
-    }),
-});
+export const store = configureStore({ reducer: { coins: coinsReducer } });
 
 export type RootState = ReturnType<typeof store.getState>;
 
