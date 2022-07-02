@@ -2,8 +2,11 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import coinsReducer from '../slices/cryptoSlice';
+import coinReducer from '../slices/coinSlice';
 
-export const store = configureStore({ reducer: { coins: coinsReducer } });
+export const store = configureStore({
+  reducer: { coins: coinsReducer, chosenCoin: coinReducer },
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 

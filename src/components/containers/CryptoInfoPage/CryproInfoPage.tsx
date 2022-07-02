@@ -3,10 +3,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { fetchCoins } from '../../../redux/slices/cryptoSlice';
 import { CryproInfoPageView } from '../../views/CryptoInfoPage/CryproInfoPage';
+import { useNavigate } from 'react-router-dom';
+import { setChosenCoin } from '../../../redux/slices/coinSlice';
 
 export const CryproInfoPageContainer = () => {
-  const coins = useAppSelector((state) => state.coins);
-  const [data, setData] = useState<any>();
+  const navigate = useNavigate();
+  const coins = useAppSelector((state) => state.coins.coins);
   const dispatch = useAppDispatch();
   // const getCoinsArr = async () => {
   //   const responese = await axios.get(
@@ -14,6 +16,11 @@ export const CryproInfoPageContainer = () => {
   //   );
   //   console.log(responese.data);
   // };
+
+  const handleOnClickListItemPage = (el: any) => {
+    navigate('/coin__page');
+    dispatch(setChosenCoin(el));
+  };
 
   const createInterval = useCallback((cb: any, time: any) => {
     const timer = setInterval(cb, time);
@@ -26,5 +33,10 @@ export const CryproInfoPageContainer = () => {
     return () => unsubscribe();
   }, []);
 
-  return <CryproInfoPageView />;
+  return (
+    <CryproInfoPageView
+      data={coins}
+      handleOnClickListItemPage={handleOnClickListItemPage}
+    />
+  );
 };
