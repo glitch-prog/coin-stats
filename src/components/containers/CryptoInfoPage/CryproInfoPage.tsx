@@ -1,22 +1,15 @@
-import axios from 'axios';
-import React, {
-  ChangeEvent,
-  ChangeEventHandler,
-  useCallback,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
 import { fetchCoins } from '../../../redux/slices/cryptoSlice';
 import { CryproInfoPageView } from '../../views/CryptoInfoPage/CryproInfoPage';
 import { useNavigate } from 'react-router-dom';
 import { setChosenCoin } from '../../../redux/slices/coinSlice';
 import { HeaderView } from '../../views/Header/Header';
-import { elementAcceptingRef } from '@mui/utils';
 
 export const CryproInfoPageContainer = () => {
   const navigate = useNavigate();
   const coins = useAppSelector((state) => state.coins.coins);
+  const search = useAppSelector((state) => state.searchCoin.search);
   const dispatch = useAppDispatch();
 
   const handleOnClickListItemPage = (name: string) => {
@@ -36,11 +29,15 @@ export const CryproInfoPageContainer = () => {
     return () => unsubscribe();
   }, []);
 
+  const filteredCoins = coins.filter((el: any) =>
+    search ? el.name.toLowerCase().includes(search) : el
+  );
+
   return (
     <>
       <HeaderView />
       <CryproInfoPageView
-        data={coins}
+        data={filteredCoins}
         handleOnClickListItemPage={handleOnClickListItemPage}
       />
     </>

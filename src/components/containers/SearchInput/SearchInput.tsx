@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
+import { setSearchCoin } from '../../../redux/slices/searchSlice';
 import { SearchInputView } from '../../views/SearchInput/SearchInput';
 
 export const SearchInputContainer = () => {
-  const [searchText, setSearchText] = useState<string>();
+  const dispatch = useAppDispatch();
 
   const handleOnChangeSort = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-    console.log(searchText);
+    dispatch(setSearchCoin(e.target.value.toLowerCase()));
   };
   return (
     <>

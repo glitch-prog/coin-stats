@@ -10,14 +10,9 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { SearchInputContainer } from '../../containers/SearchInput/SearchInput';
-
-interface Column {
-  id: 'name' | 'current_price' | 'market_cap' | 'market_cap_rank';
-  label: string;
-  minWidth?: number;
-  align?: 'right';
-  format?: (value: number) => string;
-}
+import { Column } from './CryptoInfoPage.interface';
+import { Data } from './CryptoInfoPage.interface';
+import { useAppSelector } from '../../../hooks/reduxHooks';
 
 const columns: readonly Column[] = [
   { id: 'name', label: 'Name', minWidth: 170 },
@@ -38,13 +33,6 @@ const columns: readonly Column[] = [
   },
 ];
 
-interface Data {
-  name: string;
-  current_price: string;
-  market_cap: number;
-  market_cap_rank: number;
-}
-
 function createData(
   name: string,
   current_price: string,
@@ -63,6 +51,7 @@ export const CryproInfoPageView = ({
     createData(el.name, el.current_price, el.market_cap, el.market_cap_rank)
   );
 
+  const coins = useAppSelector((state) => state.coins.coins);
   console.log(rows);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -80,7 +69,7 @@ export const CryproInfoPageView = ({
 
   return (
     <div className={styles.table__container}>
-      {data.length ? (
+      {coins.length ? (
         <>
           <SearchInputContainer />
           <Paper
