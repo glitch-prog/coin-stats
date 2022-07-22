@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const initialState: any = {
   coin: {},
+  history: {},
 };
 
 const coinSlice = createSlice({
@@ -11,6 +12,9 @@ const coinSlice = createSlice({
   reducers: {
     setChosenCoin: (state: { coin: any }, action: PayloadAction<any>) => {
       state.coin = action.payload;
+    },
+    setCoinHistory: (state: { history: any }, action: PayloadAction<any>) => {
+      state.history = action.payload;
     },
   },
 });

@@ -1,4 +1,11 @@
-.cryptoInfoTable {
+* {
+  color: '#ffffff';
+}
+
+.table__container {
+  width: 1050px;
+  margin: 0 auto;
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: center;
