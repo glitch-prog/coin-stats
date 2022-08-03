@@ -113,8 +113,7 @@ export const Chart = () => {
     for (let i = 0; i <= labels.length; i++) {
       const obj = {
         name: labels[i],
-        pv: prices[i],
-        amt: 1000 + i,
+        price: prices[i],
       };
       data1.push(obj);
     }
@@ -143,7 +142,7 @@ export const Chart = () => {
       <Legend />
       <Line
         type='monotone'
-        dataKey='pv'
+        dataKey='price'
         stroke='#8884d8'
         activeDot={{ r: 8 }}
       />
