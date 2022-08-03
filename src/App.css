@@ -1,3 +1,8 @@
-html {
-  background-color: #0b1437;
+* {
+  font-family: 'Open Sans';
+  font-style: normal;
 }
+
+/* html {
+  background-color: #0b1437;
+} */

@@ -1,29 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useAppSelector } from '../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks';
+import { fetchHistory } from '../../../redux/slices/coinSlice';
 import CryptoCoinPageView from '../../views/CryptoCoinPage/CryptoCoinPage';
 import { HeaderView } from '../../views/Header/Header';
 
 const defaultId = 'bitcoin';
 
 export const CryptoCoinPageContainer = () => {
-  const [history, setHistory] = useState();
+  const [prices, setPrices] = useState();
+  const dispatch = useAppDispatch();
 
   const coin = useAppSelector((state) => state.chosenCoin.coin);
-  const COIN_HISTORY_URL = `https://api.coingecko.com/api/v3/coins/${
-    coin.id || defaultId
-  }/market_chart?vs_currency=usd&days=30`;
-
-  const fetchHistory = async () => {
-    const response = await axios.get(COIN_HISTORY_URL);
-
-    const data = response.data;
-    console.log(data);
-    setHistory(data);
-  };
 
   useEffect(() => {
-    // fetchHistory();
+    // setPrices(history.prices);
+    dispatch(fetchHistory());
   }, []);
 
   return (

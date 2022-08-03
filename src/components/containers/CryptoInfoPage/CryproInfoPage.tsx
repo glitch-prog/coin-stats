@@ -10,6 +10,7 @@ export const CryproInfoPageContainer = () => {
   const navigate = useNavigate();
   const coins = useAppSelector((state) => state.coins.coins);
   const search = useAppSelector((state) => state.searchCoin.search);
+  console.log(search);
   const dispatch = useAppDispatch();
 
   const handleOnClickListItemPage = (name: string) => {

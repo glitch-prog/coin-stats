@@ -8,6 +8,7 @@ export const SearchInputContainer = () => {
 
   const handleOnChangeSort = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchCoin(e.target.value.toLowerCase()));
+    console.log(e.target.value.toLowerCase());
   };
   return (
     <>
