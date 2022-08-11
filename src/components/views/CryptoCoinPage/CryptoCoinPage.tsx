@@ -1,102 +1,117 @@
-import React, { useEffect, useRef } from 'react';
-import { Chart } from '../Chart/Chart';
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import React from 'react';
+import { ChartContainer } from '../../containers/Chart/Chart';
+import { CryptoConverterContainer } from '../../containers/CryptoConverter/CryptoConverter';
 
-export default function CryptoCoinPageView({ coin }: any) {
-  const dataset = [65, 59, 80, 81, 56, 55, 40];
-  const data = [
-    {
-      name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
-    },
-    {
-      name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
-    },
-    {
-      name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
-    },
-    {
-      name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
-    },
-    {
-      name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
-    },
-    {
-      name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
-    },
-    {
-      name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
-    },
-  ];
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import styled from 'styled-components';
+import { Button } from '@mui/material';
 
-  const chartRef = useRef<Chart | null>(null);
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
-  // const canvasCallback = (canvas: HTMLCanvasElement | null) => {
-  //   if (!canvas) return;
-  //   const ctx = canvas.getContext('2d');
-  //   if (ctx) {
-  //     chartRef.current = new Chart(ctx, {
-  //       type: 'line',
-  //       data: {
-  //         labels: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'],
-  //         datasets: [{ data: dataset }],
-  //       },
-  //       options: { responsive: true },
-  //     });
-  //   }
-  // };
+const Container = styled.div`
+  width: 1050px;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
-  // useEffect(() => {
-  //   // must verify that the chart exists
-  //   if (chartRef.current) {
-  //     chartRef.current.data = data;
-  //     chartRef.current.update();
-  //   }
+const CryptoInfoSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 24px;
+  margin-bottom: 40px;
+`;
 
-  //   // cleanup function - I had to remove this as it was causing errors
-  //   // return () => {
-  //   //   chartRef.current?.destroy();
-  //   // };
-  // }, [data]);
+const CryptoImage = styled.img`
+  width: 4em;
+  height: 4em;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin: 10px;
+`;
 
+const PriceText = styled.p`
+  color: #ffffff;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 20px;
+  font-size: 40px;
+`;
+
+const PercentageText = styled.p`
+  color: #51ffcc;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 20px;
+  font-size: 20px;
+`;
+
+const PercentageTextNegative = styled.p`
+  color: red;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-right: 20px;
+  font-size: 20px;
+`;
+
+const Title = styled.h3`
+  color: #ffffff;
+  font-size: 2em;
+  margin: 0;
+`;
+
+const ChartConverterContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+`;
+
+export default function CryptoCoinPageView({
+  coin,
+  handleOnClickAddToFavorites,
+}: any) {
   return (
-    <div>
-      <h3>{coin.name}</h3>
-      <div>
-        <img src={coin.image} alt='' />
-        <p>${coin.current_price}</p>
-        <p>{coin.price_change_percentage_24h}</p>
-      </div>
-      <Chart />
-    </div>
+    <ThemeProvider theme={darkTheme}>
+      <Container>
+        <Title>{coin.name}</Title>
+        {/* 
+        <Button variant='contained' disabled>
+          Add to favorites
+        </Button>
+        <Button
+          variant='contained'
+          onClick={() => handleOnClickAddToFavorites(coin)}
+        >
+          Add to favrorites
+        </Button> */}
+
+        <CryptoInfoSection>
+          <CryptoImage src={coin.image} alt='image not found' />
+          <PriceText>${coin.current_price}</PriceText>
+          {+coin.price_change_percentage_24h > 0 ? (
+            <PercentageText>
+              +{coin.price_change_percentage_24h}%
+            </PercentageText>
+          ) : (
+            <PercentageTextNegative>
+              {coin.price_change_percentage_24h}%
+            </PercentageTextNegative>
+          )}
+        </CryptoInfoSection>
+        <ChartConverterContainer>
+          <ChartContainer />
+          <CryptoConverterContainer />
+        </ChartConverterContainer>
+      </Container>
+    </ThemeProvider>
   );
 }

@@ -1,15 +1,15 @@
-import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
 import coinsReducer from '../slices/cryptoSlice';
 import coinReducer from '../slices/coinSlice';
 import searchReducer from '../slices/searchSlice';
+import favoritesReducer from '../slices/favoritesSlice';
 
 export const store = configureStore({
   reducer: {
     coins: coinsReducer,
     chosenCoin: coinReducer,
     searchCoin: searchReducer,
+    favoriteList: favoritesReducer,
   },
 });
 
